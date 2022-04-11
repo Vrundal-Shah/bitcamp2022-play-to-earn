@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./MetamaskAuth.module.css";
+import Profile from "./Profile";
 
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
@@ -36,7 +38,7 @@ async function checkIfWalletIsConnected(onConnected) {
   }
 }
 
-export default function MetaMaskAuth({ onAddressChanged }) {
+export default function MetaMaskAuth({ onAddressChanged, isAuthenticated }) {
   const [userAddress, setUserAddress] = useState("");
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function MetaMaskAuth({ onAddressChanged }) {
 
   return userAddress ? (
     <div>
-      Connected with <Address userAddress={userAddress} />
+      <>Connected with</> <Address userAddress={userAddress} />
     </div>
   ) : (
     <Connect setUserAddress={setUserAddress} />
@@ -74,7 +76,7 @@ function Connect({ setUserAddress }) {
   );
 }
 
-function Address({ userAddress }) {
+function Address({ userAddress, isAuthenticated }) {
   return (
     <span className={styles.address}>
       {userAddress.substring(0, 5)}…
